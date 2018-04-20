@@ -152,17 +152,17 @@ void exibe(voos *FILA)
 
 		if(tmp->numDoVoo <= 9)
         {
-            printf("-> Aeronave 0%d chegando. ", tmp->numDoVoo);
+            printf("-> Aeronave 0%d chegando *", tmp->numDoVoo);
         }
 
 		else
         {
-            printf("-> Aeronave %d chegando. ", tmp->numDoVoo);
+            printf("-> Aeronave %d chegando *", tmp->numDoVoo);
 		}
 
 		if(tmp->combustivel == 1)
         {
-            printf("Nivel de combustivel: 0%d (POUSO DE EMERGENCIA!!!)\n", tmp->combustivel);
+            printf("Nivel de combustivel: 0%d (ATENCAO! POUSO DE EMERGENCIA)\n", tmp->combustivel);
         }
 		else
         {
@@ -262,10 +262,10 @@ void ordenarFila(voos* FILA, int* comb, int* num, int* NAproximacoes)
     while(aux != NULL)
     {
         if(aux->numDoVoo <= 9)
-            printf ("-> Aeronave 0%d chegando. ", aux->numDoVoo);
+            printf ("-> Aeronave 0%d *", aux->numDoVoo);
 
         else
-            printf ("-> Aeronave %d chegando. ", aux->numDoVoo);
+            printf ("-> Aeronave %d *", aux->numDoVoo);
 
         if(aux->combustivel <= 9)
             printf("Nivel de combustivel: 0%d\n", aux->combustivel);
@@ -318,7 +318,7 @@ void Pista1(voos* FILA)
 void Desinfileirar(voos* FILA)
 {
     voos* aux = retira(FILA);
-    printf ("\n\nLISTA DE APROXIMACOES:\n");
+    printf ("\n\n NOVA LISTA DE APROXIMACOES:\n");
    // printf (" ");
     while(aux != NULL)
     {
@@ -374,6 +374,8 @@ int  main(void){
 
     printf("\n");
     //printf("tamanho: %d\n", tam);
+
+    system("pause");
 
     return 0;
 }
