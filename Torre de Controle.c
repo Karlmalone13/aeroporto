@@ -137,7 +137,7 @@ void insere(voos* FILA, int* NAproximacoes)
 void exibe(voos *FILA)
 {
 	printf ("\n\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
-    printf ("                                                   RELATORIO DE APROXIMACOES");
+    printf ("                                               RELATORIO DE APROXIMACOES");
     printf ("\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
 
 	if(vazia(FILA))
@@ -152,12 +152,12 @@ void exibe(voos *FILA)
 
 		if(tmp->numDoVoo <= 9)
         {
-            printf("-> Aeronave 0%d chegando *", tmp->numDoVoo);
+            printf("-> Aeronave 0%d *", tmp->numDoVoo);
         }
 
 		else
         {
-            printf("-> Aeronave %d chegando *", tmp->numDoVoo);
+            printf("-> Aeronave %d *", tmp->numDoVoo);
 		}
 
 		if(tmp->combustivel == 1)
@@ -195,6 +195,7 @@ void ordenarVetor(voos* FILA, int* NAproximacoes, int comb[], int num[])
             num[i] = tmp->numDoVoo;
             tmp = tmp->prox;
         }
+
          else
                 break;
 
@@ -255,9 +256,10 @@ void ordenarFila(voos* FILA, int* comb, int* num, int* NAproximacoes)
     }
 
     voos* aux = FILA->prox;
+    printf ("\n\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
+    printf ("                                      LISTA DE POUSO DE ACORDO COM A PRIORIDADE:");
+    printf ("\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
 
-    printf ("\nLISTA DE POUSO DE ACORDO COM A PRIORIDADE:\n");
-    //printf (" ");
 
     while(aux != NULL)
     {
@@ -280,14 +282,16 @@ void ordenarFila(voos* FILA, int* comb, int* num, int* NAproximacoes)
 
 }
 
-voos *retira(voos *FILA)
+voos *retira(voos *FILA, int NAproximacoes)
 {
 	if(FILA->prox == NULL){
-		printf("Fila ja esta vazia\n");
+		printf("FILA JA ESTA VAZIA!\n");
 		return NULL;
 	}else{
 		voos *tmp = FILA->prox;
 		FILA->prox = tmp->prox;
+		if(tmp-> prox == NULL && NAproximacoes == 1)
+            printf ("NENHUM VOO SE APROXIMANDO\n!");
 		tam--;
 		free(tmp);
 		return tmp->prox;
@@ -297,16 +301,16 @@ voos *retira(voos *FILA)
 void Pista1(voos* FILA)
 {
     voos* aux = FILA->prox;
-    printf ("\n\n-- -- -- -- -- -- -- -- -- -- -- -- -- -- --");
-    printf ("\n           PISTA 1\n");
-    printf ("-- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
+    printf ("\n\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
+    printf ("                                                      PISTA 1");
+    printf ("\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
 
     if(aux->numDoVoo <= 9)
     {
-        printf ("-> Aeronave 0%d acaba de pousar\n\n", aux->numDoVoo);
+        printf ("-> Aeronave 0%d LIBERADA A ATERRISSAGEM NA PISTA 1\n", aux->numDoVoo);
     }
     else
-         printf ("-> Aeronave %d acaba de pousar\n\n", aux->numDoVoo);
+         printf ("-> Aeronave %d LIBERADA A ATERRISSAGEM NA PISTA 1\n", aux->numDoVoo);
 
 
 
@@ -315,18 +319,22 @@ void Pista1(voos* FILA)
 
 
 
-void Desinfileirar(voos* FILA)
+void Desinfileirar(voos* FILA, int* NAproximacoes)
 {
-    voos* aux = retira(FILA);
-    printf ("\n\n NOVA LISTA DE APROXIMACOES:\n");
-   // printf (" ");
+    voos* aux = retira(FILA, &NAproximacoes);
+
+    printf ("\n\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
+    printf ("                                            NOVA LISTA DE APROXIMACOES");
+    printf ("\n -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --\n");
+
     while(aux != NULL)
     {
+
         if(aux->numDoVoo <= 9)
-            printf ("-> Aeronave 0%d chegando. ", aux->numDoVoo);
+            printf ("-> Aeronave 0%d AGUARDANDO A ORDEM DE ATERRISSAGEM. ", aux->numDoVoo);
 
         else
-            printf ("-> Aeronave %d chegando. ", aux->numDoVoo);
+            printf ("-> Aeronave %d AGUARDANDO A ORDEM DE ATERRISSAGEM. ", aux->numDoVoo);
 
         if(aux->combustivel <= 9)
             printf("Nivel de combustivel: 0%d\n", aux->combustivel);
@@ -343,6 +351,7 @@ void Desinfileirar(voos* FILA)
 int  main(void){
 
     int NVoos, NAproximacoes, NDecolagens, a;
+
 
     voos* FILA = (voos *) malloc(sizeof(voos));
 
@@ -369,12 +378,10 @@ int  main(void){
     ordenarVetor(FILA, &NAproximacoes, comb, num);
     ordenarFila(FILA, comb, num, &NAproximacoes);
     Pista1(FILA);
-    Desinfileirar(FILA);
+    Desinfileirar(FILA, &NAproximacoes);
 
 
     printf("\n");
-    //printf("tamanho: %d\n", tam);
-
     system("pause");
 
     return 0;
